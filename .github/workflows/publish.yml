@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'pyproject.toml'
 
 # Required for PyPI trusted publishing
 permissions:
@@ -16,6 +14,9 @@ jobs:
   check-version-and-publish:
     runs-on: ubuntu-latest
     steps:
+      - name: This workflow is currently disabled
+        run: echo "This workflow is disabled to prevent accidental publishing."
+
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # This fetches all history for comparing versions
