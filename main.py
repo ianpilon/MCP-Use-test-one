@@ -1,8 +1,10 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, RedirectResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from sse_starlette.sse import EventSourceResponse
 import os
 import json
+import asyncio
 from typing import Dict, List, Optional
 from pydantic import BaseModel
 
@@ -81,6 +83,18 @@ def get_functions() -> Dict[str, List[MCPFunction]]:
         )
     ]
     return {"functions": functions}
+
+@app.get("/mcp/sse")
+async def sse_endpoint(request: Request):
+    async def event_generator():
+        while True:
+            if await request.is_disconnected():
+                break
+            yield {
+                "data": json.dumps({"type": "ping"})
+            }
+            await asyncio.sleep(1)
+    return EventSourceResponse(event_generator())
 
 @app.post("/mcp/invoke")
 async def invoke_function(tool_call: MCPToolCall) -> JSONResponse:

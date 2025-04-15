@@ -19,7 +19,7 @@ Build a Model Context Protocol (MCP) server following the design of the mcp_use 
     - c. Visit `http://127.0.0.1:8000/health` to check the health endpoint.
     - d. Visit `http://127.0.0.1:8000/files` to see the list of files.
     - e. Download a file via `http://127.0.0.1:8000/files/placeholder1.txt`.
-- [ ] 5. Deploy to render.com:
+- [x] 5. Deploy to render.com:
     - a. Push code to GitHub
     - b. Connect GitHub repo to render.com
     - c. Deploy using the provided render.yaml configuration
